@@ -23,8 +23,4 @@ current accuracies after training on the validation sets:
 
 cancer_1: ~94%
   
-cancer_2: 92~96%
-
-
-
-  
+cancer_2: 92-96%
