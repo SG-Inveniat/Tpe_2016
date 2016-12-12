@@ -16,7 +16,7 @@ source folder containing the Artificial Neural Network (ANN) code written in pyt
 
 Note: all source files require the installation of Keras: https://keras.io ; TensorFlow: https://www.tensorflow.org ; Theano: http://deeplearning.net/software/theano/ 
 
-Unix based system recommended for possible compatibility issued
+Unix based system recommended for possible compatibility issues
 
 ###accuracies
 current accuracies after training on the validation sets: 
