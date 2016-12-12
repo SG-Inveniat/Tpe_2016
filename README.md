@@ -16,8 +16,11 @@ The data used was accordingly split into "train_data.txt" and "validation_data.t
 Source folder containing the Artificial Neural Network (ANN) code written in python 3.5.
 
 Requirements:
+
 &nbsp;&nbsp;&nbsp;&nbsp;Keras: https://keras.io
+
 &nbsp;&nbsp;&nbsp;&nbsp;TensorFlow: https://www.tensorflow.org
+
 &nbsp;&nbsp;&nbsp;&nbsp;Theano: http://deeplearning.net/software/theano/
 
 
