@@ -1,7 +1,7 @@
 # Tpe_2016
 Artificial Intelligence Tpe 2016
 
-##médecine
+##medicine
 Two similar folders "cancer_1" and "cancer_2" containing neural networks to aiming at evaluating breast cancer nature - benign/malignant.
 
 ###/resources
