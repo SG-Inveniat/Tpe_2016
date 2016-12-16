@@ -17,6 +17,8 @@ Source folder containing the Artificial Neural Network (ANN) code written in pyt
 
 Requirements:
 
+&nbsp;&nbsp;&nbsp;&nbsp;Numpy: http://www.numpy.org
+
 &nbsp;&nbsp;&nbsp;&nbsp;Keras: https://keras.io
 
 &nbsp;&nbsp;&nbsp;&nbsp;TensorFlow: https://www.tensorflow.org
@@ -30,3 +32,5 @@ current accuracies after training on the validation sets:
 &nbsp;&nbsp;&nbsp;&nbsp;cancer_1: ~94%
 
 &nbsp;&nbsp;&nbsp;&nbsp;cancer_2: 92-96%
+
+Sample accuracies and test runs can be obtained in the "sample_results" folder under each of the cancer_ folders. The validation accuracies are displayed alongside their respective losses at the bottom left-hand corner (in %).
