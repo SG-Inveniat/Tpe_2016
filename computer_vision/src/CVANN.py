@@ -12,8 +12,8 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 
 
 def main():
-    train = load_data('AV_train')
-    validation = load_data('AV_validation')
+    train = load_data('OCRANN_train')  # AV_
+    validation = load_data('OCRANN_validation')
     model = neural_network(train, validation)  # train, validation
 
 
@@ -30,7 +30,7 @@ def neural_network(train, validation, nb_epoch=5, batch_size=40, activations=('r
     model.add(Flatten())  # converts our 2D feature maps to 1D feature vectors
     model.add(Dense(128, activation=activations[1]))
     model.add(Dropout(0.3))
-    model.add(Dense(train[2], activation=activations[2]))
+    model.add(Dense(len(train[2]), activation=activations[2]))
 
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
@@ -44,7 +44,7 @@ def neural_network(train, validation, nb_epoch=5, batch_size=40, activations=('r
     return model
 
 
-def load_data(img_dir_name, img_dimensions=(120, 90)):
+def load_data(img_dir_name, img_dimensions=(120, 90), verbose=0):
 
     print('\nLoading data: "' + str(img_dir_name) + '"')
 
@@ -70,13 +70,19 @@ def load_data(img_dir_name, img_dimensions=(120, 90)):
     labels = np.zeros((total_num_images, 1)).astype('int')
     i = 0
     for sub_dir in sub_dir_names:
-        print('current directory of images: ' + sub_dir)
+        if verbose == 1:
+            end = ' '
+        else:
+            end = '\n'
+        print('current directory of images: ' + sub_dir, end=end)
 
         label = int(dictionary[sub_dir])  # the 'label' associated to this folder
         sub_dir_path = directory + os.sep + sub_dir
         img_files = [file for file in os.listdir(sub_dir_path) if not file.startswith('.')]
 
         for file in img_files:
+            if verbose == 1:
+                progress_bar(len(img_files))  # testing phase
             file_path = sub_dir_path + os.sep + file
             img = load_img(file_path, grayscale=True, target_size=img_dimensions)
             # img = sep_grayscale_intervals(img, num_intervals=8)  # testing phase
@@ -92,7 +98,7 @@ def load_data(img_dir_name, img_dimensions=(120, 90)):
     nb_classes = len(dictionary)
     labels = to_categorical(labels, nb_classes=nb_classes)
 
-    return data, labels, nb_classes
+    return data, labels, dictionary
 
 
 def sep_grayscale_intervals(img, num_intervals=4, output_path=None):
@@ -117,6 +123,30 @@ def sep_grayscale_intervals(img, num_intervals=4, output_path=None):
         img.save(output_path, 'JPEG')
 
     return array_to_img(img_array)
+
+
+def progress_bar(max_, bar_width=40):
+    try:
+        if not progress_bar.counter:
+            progress_bar.counter = 0
+
+    except AttributeError:
+        progress_bar.counter = 0
+
+    percentage = str(int((progress_bar.counter + 1)/max_*100))
+    bar = '[' + '-'*(int(bar_width*(progress_bar.counter+1)/max_) - 1) + '>' + \
+          '.'*(bar_width - int(bar_width*(progress_bar.counter + 1)/max_)) + ']' + percentage + '%'
+
+    progress_bar.counter += 1
+
+    if progress_bar.counter == 1:
+        print(bar, end='', flush=True)
+    else:
+        print('\b' * len(bar) + bar, end='', flush=True)
+
+    if progress_bar.counter == max_:
+        progress_bar.counter = 0
+        print()
 
 
 if __name__ == '__main__':
