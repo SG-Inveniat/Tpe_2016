@@ -2,6 +2,7 @@
 
 import os
 import numpy as np
+from tqdm import *
 
 from keras.models import Sequential
 from keras.layers import MaxPooling2D, Convolution2D
@@ -44,7 +45,7 @@ def neural_network(train, validation, nb_epoch=5, batch_size=40, activations=('r
     return model
 
 
-def load_data(img_dir_name, img_dimensions=(120, 90), verbose=0):
+def load_data(img_dir_name, img_dimensions=(120, 90)):
 
     print('\nLoading data: "' + str(img_dir_name) + '"')
 
@@ -70,19 +71,13 @@ def load_data(img_dir_name, img_dimensions=(120, 90), verbose=0):
     labels = np.zeros((total_num_images, 1)).astype('int')
     i = 0
     for sub_dir in sub_dir_names:
-        if verbose == 1:
-            end = ' '
-        else:
-            end = '\n'
-        print('current directory of images: ' + sub_dir, end=end)
 
         label = int(dictionary[sub_dir])  # the 'label' associated to this folder
         sub_dir_path = directory + os.sep + sub_dir
         img_files = [file for file in os.listdir(sub_dir_path) if not file.startswith('.')]
 
-        for file in img_files:
-            if verbose == 1:
-                progress_bar(len(img_files))  # testing phase
+        for file in tqdm(img_files, desc='current directory of images: ' + sub_dir):
+
             file_path = sub_dir_path + os.sep + file
             img = load_img(file_path, grayscale=True, target_size=img_dimensions)
             # img = sep_grayscale_intervals(img, num_intervals=8)  # testing phase
